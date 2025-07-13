@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class CafeMenuRequest {
-  private String menucategory;
+  private String menuCategory;
   private String menuName;
-  private String menuintroduction;
+  private String menuIntroduction;
   private String price;
   private String image;
   private Long cafeId;

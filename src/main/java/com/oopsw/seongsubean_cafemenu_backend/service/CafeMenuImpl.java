@@ -3,9 +3,14 @@ package com.oopsw.seongsubean_cafemenu_backend.service;
 import com.oopsw.seongsubean_cafemenu_backend.dto.CafeMenuDto;
 import com.oopsw.seongsubean_cafemenu_backend.jpa.CafeMenuEntity;
 import com.oopsw.seongsubean_cafemenu_backend.repository.CafeMenuRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,13 +36,32 @@ public class CafeMenuImpl implements CafeMenuService {
   }
 
   @Override
-  public CafeMenuDto editMenu(Long cafeId, Long menuId, CafeMenuDto cafeMenuDto) {
-    CafeMenuEntity cafeMenuEntity = new ModelMapper().map(cafeMenuDto, CafeMenuEntity.class);
-    cafeMenuEntity.setCafeId(cafeId);
-    cafeMenuEntity.setMenuId(menuId);
-    CafeMenuRepository.save(cafeMenuEntity);
-    return new ModelMapper().map(cafeMenuEntity, CafeMenuDto.class);
+  public List<CafeMenuDto> getMenuListByCafeId(Long cafeId) {
+    List<CafeMenuEntity> menuEntities = CafeMenuRepository.findAllByCafeId(cafeId);
+    ModelMapper mapper = new ModelMapper();
+    return menuEntities.stream()
+            .map(entity -> mapper.map(entity, CafeMenuDto.class))
+            .collect(Collectors.toList());
+  }
 
+
+  @Override
+  public void editMenu(Long cafeId, Long menuId, CafeMenuDto dto) {
+    CafeMenuEntity entity = CafeMenuRepository.findById(menuId)
+            .orElseThrow(() -> new EntityNotFoundException("해당 메뉴가 존재하지 않습니다."));
+
+    // DTO의 필드들을 Entity에 반영
+    entity.setMenuCategory(dto.getMenuCategory());
+    entity.setMenuName(dto.getMenuName());
+    entity.setMenuIntroduction(dto.getMenuIntroduction());
+
+    // BigDecimal로 변환 (DTO의 price는 문자열이라고 가정)
+    entity.setPrice(new BigDecimal(String.valueOf(dto.getPrice())));
+
+    entity.setImage(dto.getImage());
+    entity.setCafeId(cafeId);  // 명시적 설정
+
+    CafeMenuRepository.save(entity);
   }
 
   @Override

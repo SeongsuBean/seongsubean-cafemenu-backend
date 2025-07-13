@@ -3,6 +3,8 @@ package com.oopsw.seongsubean_cafemenu_backend.controller;
 import com.oopsw.seongsubean_cafemenu_backend.dto.CafeMenuDto;
 import com.oopsw.seongsubean_cafemenu_backend.service.CafeMenuService;
 import com.oopsw.seongsubean_cafemenu_backend.vo.CafeMenuRequest;
+
+import java.util.List;
 import java.util.Map;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -42,6 +44,13 @@ public class CafeMenuController {
 
     return ResponseEntity.status(HttpStatus.OK).body(cafeMenuDto);
   }
+
+  @GetMapping("/{cafeId}/menus")
+  public ResponseEntity<List<CafeMenuDto>> getMenusByCafe(@PathVariable Long cafeId) {
+    List<CafeMenuDto> menuList = cafeMenuService.getMenuListByCafeId(cafeId);
+    return ResponseEntity.ok(menuList);
+  }
+
 
   @PutMapping("/{cafeId}/menu/{menuId}")
   public ResponseEntity<Map<String,String>> editMenu(@PathVariable Long cafeId, @PathVariable Long menuId, @RequestBody CafeMenuRequest cafeMenuRequest ) {

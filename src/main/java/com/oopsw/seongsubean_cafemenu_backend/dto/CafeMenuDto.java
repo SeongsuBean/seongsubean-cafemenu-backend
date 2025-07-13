@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,7 +16,7 @@ public class CafeMenuDto {
   private String menuCategory;
   private String menuName;
   private String menuIntroduction;
-  private String price;
+  private BigDecimal price;
   private String image;
   private Long cafeId;
 
