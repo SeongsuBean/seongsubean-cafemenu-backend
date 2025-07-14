@@ -15,4 +15,9 @@ public interface CafeMenuService {
 
   boolean deleteMenu(Long cafeId, Long menuId);
 
+  /**
+   * @param menuCategory "커피" | "빵" | "케이크" | "파이" | "기타"
+   * @return 해당 카테고리에 속하는 cafeId 리스트
+   */
+  List<Long> getCafeIdsByCategory(String menuCategory);
 }

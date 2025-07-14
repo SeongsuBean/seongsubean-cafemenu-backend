@@ -6,6 +6,7 @@ import com.oopsw.seongsubean_cafemenu_backend.vo.CafeMenuRequest;
 
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/cafes")
+@Slf4j
 public class CafeMenuController {
 
 
@@ -68,6 +71,21 @@ public class CafeMenuController {
     boolean result = cafeMenuService.deleteMenu(cafeId,menuId);
 
     return ResponseEntity.status(HttpStatus.OK).body(Map.of("message","삭제가 완료되었습니다."));
+  }
+
+
+  /**
+   * 메뉴 카테고리별 카페 ID 조회
+   * 예) GET /api/menus/category?menuCategory=커피
+   *     GET /api/menus/category?menuCategory=기타
+   */
+  @GetMapping("/category")
+  public ResponseEntity<List<Long>> getCafeIdsByCategory(
+      @RequestParam("menuCategory") String menuCategory
+  ) {
+    log.info(menuCategory);
+    List<Long> cafeIds = cafeMenuService.getCafeIdsByCategory(menuCategory);
+    return ResponseEntity.ok(cafeIds);
   }
 
 

@@ -70,4 +70,17 @@ public class CafeMenuImpl implements CafeMenuService {
     return true;
   }
 
+
+  /** 메인 카테고리 네 가지 상수 */
+  private static final List<String> MAIN_CATEGORIES =
+      List.of("커피", "빵", "케이크", "파이");
+
+  @Override
+  public List<Long> getCafeIdsByCategory(String menuCategory) {
+    // ▶ 옵션 1: 분기하여 각각의 Repository 메서드 호출
+    if ("기타".equals(menuCategory)) {
+      return CafeMenuRepository.findCafeIdsForOthers(MAIN_CATEGORIES);
+    }
+    return CafeMenuRepository.findCafeIdsByMenuCategory(menuCategory);
+  }
 }
