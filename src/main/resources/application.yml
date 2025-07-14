@@ -1,9 +1,9 @@
 server:
-  port: 7002
+  port: 7003
 
 spring:
   application:
-    name: seongsubean-cafe-backend
+    name: seongsubean-cafemenu-backend
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
@@ -22,3 +22,11 @@ spring:
     show-sql: true
     generate-ddl: true
     defer-datasource-initialization: true
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka

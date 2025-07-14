@@ -3,6 +3,7 @@ package com.oopsw.seongsubean_cafemenu_backend.repository;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.oopsw.seongsubean_cafemenu_backend.jpa.CafeMenuEntity;
+import java.math.BigDecimal;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -34,7 +35,7 @@ CafeMenuRepository cafeMenuRepository;
         .menuCategory("빵")
         .menuName("크루와상")
         .menuIntroduction("맛있는빵")
-        .price("2100")
+        .price(new BigDecimal(2100))
         .image("image1")
         .cafeId(1L)
         .build();
@@ -69,7 +70,7 @@ CafeMenuRepository cafeMenuRepository;
         .menuName("크로플")
         .menuIntroduction("맛있는크로플")
         .image("ddd")
-        .price("12000")
+        .price(new BigDecimal(12000))
         .cafeId(1L)
         .build();
 
@@ -106,7 +107,7 @@ CafeMenuRepository cafeMenuRepository;
         .menuName("초기크로플")
         .menuIntroduction("처음엔 이걸로")
         .image("init.jpg")
-        .price("10000")
+        .price(new BigDecimal(10000))
         .cafeId(1L)
         // menuId 는 IDENTITY 전략이면 빼거나 null 로 둡니다.
         .build();
@@ -120,7 +121,7 @@ CafeMenuRepository cafeMenuRepository;
     cafeMenuEntity.setMenuName("크로플");
     cafeMenuEntity.setMenuIntroduction("맛있는크로플");
     cafeMenuEntity.setImage("ddd");
-    cafeMenuEntity.setPrice("12000");
+    cafeMenuEntity.setPrice(new BigDecimal(12000));
 
     CafeMenuEntity resultCafeMenuEntity = cafeMenuRepository.save(cafeMenuEntity);
     //then
@@ -137,7 +138,7 @@ CafeMenuRepository cafeMenuRepository;
         .menuName("초기크로플")
         .menuIntroduction("처음엔 이걸로")
         .image("init.jpg")
-        .price("10000")
+        .price(new BigDecimal(10000))
         .cafeId(1L)
         // menuId 는 IDENTITY 전략이면 빼거나 null 로 둡니다.
         .build();
@@ -170,7 +171,7 @@ CafeMenuRepository cafeMenuRepository;
         .menuName("초기크로플")
         .menuIntroduction("처음엔 이걸로")
         .image("init.jpg")
-        .price("10000")
+        .price(new BigDecimal("10000"))
         .cafeId(1L)
         // menuId 는 IDENTITY 전략이면 빼거나 null 로 둡니다.
         .build();
